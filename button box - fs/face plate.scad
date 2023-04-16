@@ -3,8 +3,8 @@ use <MCAD/nuts_and_bolts.scad>
 $fs=0.5;
 $fa=5; 
 
-side_padding = 6;
-hole_distance_button = 18;
+side_padding = 4.2;
+hole_distance_button = 18.6;
 num_button = 6;
 
 assembly_width = hole_distance_button*num_button+side_padding*2;
@@ -84,12 +84,13 @@ module drilled_sheet(
 module key_switch_cutout(
         assembly_thickness = 3) {
     tab_width=0.8;
+    assembly_y_tab=14.4;
     assembly_y=14;
-    assembly_x=assembly_y+(2*tab_width);
+    assembly_x=14+(2*tab_width);
     tab_thickness = 1.5;
     difference () {
         translate([0,0,assembly_thickness/2]) {
-            cube(size=[assembly_x,assembly_y,assembly_thickness], center=true);
+            cube(size=[assembly_x,assembly_y_tab,assembly_thickness], center=true);
         }
         // Right side
         translate([assembly_y/2+tab_width/2,0,tab_thickness/2]) {
@@ -116,6 +117,18 @@ module key_switch_cutout(
         translate([-(assembly_y/2+tab_width/2),-6.5,tab_thickness/2]) {
             // Buttom tab
             cube(size=[tab_width,1,tab_thickness], center=true);
+        }
+        assembly_y_tab_offset = assembly_y_tab/2;
+        assembly_y_tab_width = assembly_y_tab - assembly_y;
+        // Top side
+        translate([0,assembly_y_tab_offset,assembly_y_tab_width]) {
+            // Buttom tab
+            cube(size=[assembly_x,assembly_y_tab_width,tab_thickness], center=true);
+        }
+        // Bottom side
+        translate([0,-assembly_y_tab_offset,assembly_y_tab_width]) {
+            // Buttom tab
+            cube(size=[assembly_x,assembly_y_tab_width,tab_thickness], center=true);
         }
     }
 }
